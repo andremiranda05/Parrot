@@ -1,0 +1,110 @@
+<style>
+  #eventos-img{
+    min-width: 200px;
+    min-height: 200px;
+
+  }
+</style>
+
+<p id="notice"><%= notice %></p>
+<% if current_user.present?  %>
+      <a class="btn btn-primary" role="button" <%= link_to 'Novo evento', new_event_path %> </a>
+
+<% else %>
+    <h3>Logue se para criar seu evento.</h3>
+<% end %>
+
+<h2>Eventos</h2>
+<!--<div class="row">
+  <div class="container-fluid">
+    <div class="col-md-5 portfolio-item">
+      <table>
+        <thead>
+          <tr>
+            <th>Imagem Evento</th>
+            <th>Nome evento</th>
+            <th>Data evento</th>
+            <th>Descrição</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @events.each do |event| %>
+            <tr>
+
+              <td><%= image_tag event.photo.url(:thumb) %></td>
+              <td><%= event.nome_evento %></td>
+              <td><%= event.data_evento %></td>
+              <td><%= event.descrição %></td>
+              <td>&nbsp;<%= link_to 'Show', event%> </td>
+              <%if event.user == current_user%>
+              <td>&nbsp;<%= link_to 'Edit', edit_event_path(event) %></td>
+              <td>&nbsp;<%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' }%> </td>
+              <%end%>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<br>
+-->
+
+<div class="container-fluid">
+  <div class="row">
+    <% @events.each do |event| %>
+      <div class="col-md-3 portfolio-item">
+          <div class="thumbnail">
+              <div id="eventos-img">
+                <%= image_tag event.photo.url(:medium) %>
+              </div>
+              <hr>
+              <h3>
+                 Título: <%= event.nome_evento %></br>
+              </h3>
+                <p>Dia: <%= event.data_evento %></p>
+                <p>Descrição:<%= event.descrição %></p>
+                <p>Local:</p>
+                    <a class="btn btn-primary" role="button" <%= link_to 'Mais Informações', event %> </a>
+
+                <%if event.user == current_user%>
+                  <a class="btn btn-primary" role="button" <%= link_to 'Editar', edit_event_path(event) %> </a>
+                  <a class="btn btn-primary" role="button"<%= link_to 'Apagar', event, method: :delete, data: { confirm: 'Tem certeza?' }%> </a>
+                <%end%>
+          </div>
+        </div>
+    <%end%>
+  </div>
+</div>
+
+
+        <!-- Pagination -->
+        <div class="row text-center">
+            <div class="col-lg-12">
+                <ul class="pagination">
+                    <li>
+                        <a href="#">&laquo;</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">1</a>
+                    </li>
+                    <li>
+                        <a href="#">2</a>
+                    </li>
+                    <li>
+                        <a href="#">3</a>
+                    </li>
+                    <li>
+                        <a href="#">4</a>
+                    </li>
+                    <li>
+                        <a href="#">5</a>
+                    </li>
+                    <li>
+                        <a href="#">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>

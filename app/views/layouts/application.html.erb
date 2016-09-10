@@ -37,6 +37,13 @@
     <![endif]-->
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */
+        .userfunc li{
+          color: ##0edb21;
+        }
+        body{
+          overflow-x: hidden;
+          margin: 0;
+        }
         .navbar {
           margin-bottom: 0;
           border-radius: 0;
@@ -47,6 +54,10 @@
           background-color: #1b1b1b;
           padding: 25px;
         }
+
+      #logo{
+          padding: 5px;
+      }
 
       .carousel-inner img {
           width: 100%; /* Set width to 100% */
@@ -74,7 +85,10 @@
       h4{
           color: #fff9f9;
       }
+      div#corpo-centro{
+        text-align: center;
 
+      }
     </style>
   </head>
   <body>
@@ -87,30 +101,46 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a id="logo" class="navbar-brand"> <%=image_tag "logo.png" %> </a>
+          <a id="logo" class="navbar-brand">  <%=image_tag "logo.png" %> </a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
             <li class="active"> <%= link_to "Inicio", index_path%> </li>
-            <li><a href="#">Sobre</a></li>
-            <li><a href="#">Contato</a></li>
+            <li><%= link_to "Sobre", sobre_path%></li>
+            <li><%= link_to "Contato", contato_path %></li>
+            <li><%= link_to "Eventos", events_path %></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"> </i> Login</a></li>
-            <li><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Cadastre-se</a></li>
+            <% if current_user.present? %>
+            <li><a> Seja bem vindo <%= current_user.email %></a></li>
+            <li><%= link_to edit_user_registration_path(@user) do %> <i class="fa fa-wrench" aria-hidden="true"></i> Minha Conta <% end %> </li>
+            <li><%= link_to new_event_path(@event) do %> <i class="fa fa-plus-square-o" aria-hidden="true"></i> Novo evento <% end %> </li>
+            <li><%= link_to(destroy_user_session_path(@event), :method => :delete) do%><i class="fa fa-sign-out" aria-hidden="true"></i> Sair <% end %></li>
+            <%else%>
+            <li> <%= link_to new_user_session_path(@user) do %> <i class="fa fa-sign-in"></i> Login <% end %> </li>
+            <li><%= link_to new_user_registration_path(@user) do %> <i class="fa fa-sign-in"></i> Cadastre-se <% end %> </li>
+            <%end%>
           </ul>
+
+
+
           <!-- Campo de Busca-->
           <form class="navbar-form navbar-left">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Buscar eventos...">
+              <div class="form-group">
+                <%= form_tag(events_path, :method => :get) do%>
+                <%= text_field_tag'search', placeholder="Buscar eventos..."%>
+                <%= submit_tag"Buscar"%>
+                <%end%>
+              </div>
             </div>
-            <button type="submit" class="btn btn-default">Buscar</button>
+            <!--<button type="submit" class="btn btn-default">Buscar</button>-->
           </form>
 
         </div>
       </div>
     </nav>
-      <div class="">
+      <div id="corpo-centro">
         <div class="">
           <%= bootstrap_flash %>
           <%= yield %>
@@ -118,24 +148,32 @@
       </div>
 
     <footer class="container-fluid">
-      <div id="conteudo-footer" class="container-fluid">
-        <div class="container">
-          <div class="col-md-6">
-  		 			<h4>Redes Sociais</h4>
-  		 			<p>
-  		 				<a href="#"><i class="fa fa-facebook"></i></a>
-  		 				<a href="#"><i class="fa fa-twitter"></i></a>
-  		 				<a href="#"><i class="fa fa-instagram"></i></a>
-  		 				<a href="#"><i class="fa fa-tumblr"></i></a>
-  		 			</p>
-          </div>
-          <div class="col-md-6">
-            <h4> Parrot <i class="fa fa-copyright" aria-hidden="true"></i> &nbsp 2016</h4>
-            <p>Desenvolvido por alunos de TADS <br> 2016 </p>
-          </div>
-        </div>
-      </div>
-
+         <div id="conteudo-footer">
+      	 	<div class="container">
+      		 	<div class="row">
+      		 		<div class="col-md-4">
+      		 			<h4>Sobre</h4>
+      		 			<div class="hline-w"></div>
+      		 			<p>O parrot é uma aplicação desenvolvida por alunos do curso de Análise e Desenvolvimento de sistemas do Instituto Federal do Piauí Campus Floriano </p>
+      		 		</div>
+              <div class="col-md-4">
+                <p>
+                  <h4>Redes Sociais</h4>
+                  <a href="#"><i class="fa fa-facebook"></i></a>
+                  <a href="#"><i class="fa fa-twitter"></i></a>
+                  <a href="#"><i class="fa fa-instagram"></i></a>
+                  <a href="#"><i class="fa fa-tumblr"></i></a>
+                </p>
+              </div>
+              <div class="col-md-4">
+                <p>
+                  <h4> Parrot <i class="fa fa-copyright" aria-hidden="true"></i> &nbsp 2016</h4>
+                    Desenvolvido por alunos de TADS <br> 2016
+                </p>
+              </div>
+      		 	</div><! --/row -->
+      	 	</div><! --/container -->
+      	 </div>
     </footer>
   </body>
 </html>
