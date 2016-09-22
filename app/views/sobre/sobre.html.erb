@@ -3,20 +3,45 @@
     text-align: center;
   }
   p{
-    text-align: center;
+    text-align: justify;;
     justify-content: center;
   }
   div#sobre-imagem{
     padding-top: 50px;
-    text-align: center;
-    justify-content: center;
+    height: 180px;
+  }
+  #conteudosobre{
+
+    width: 100%;
+    height: 100%;
+
+  }
+  #pos{
+    padding: 2%;
+    width: 100%;
+    height: 100%;
+
   }
 
+#tex{
+  max-width: 800px;
+}
 
 </style>
-<div class="container">
-  <div id="sobre-imagem"> <%=image_tag 'sobre.jpg'%></div>
-  <h1>Sobre o Parrot</h1>
-  <p>O parrot é uma aplicação desenvolvida por alunos do curso de Análise e Desenvolvimento de sistemas do Instituto Federal do Piauí Campus Floriano </p>
-  <p>O parrot surge como uma alternativa simples para a divulgação de eventos em geral por meio de um website. <br><br><br><br><br><br><br></p>
+<div id="pos" class="container-fluid">
+  <div id="conteudosobre" class="container-fluid">
+    <div class="col-md-12">
+      <div id="sobre-imagem"> <%=image_tag 'sobre.jpg'%></div>
+        <h2>Plataforma web para divulgação de eventos </h2>
+        <div id="tex" class="container-fluid">
+          <p>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Desenvolvido para permitir que qualquer pessoa divulgue ou encontre sugestões de eventos a participar.
+            Festivais musicais, teatro, conferências, festas para arrecadar fundos ... você organiza, nós divulgamos!
+             É fácil, basta acessar do seu computador, tablet ou smartphone. Vamos juntos garantir sucesso no seu evento!
+          </p>
+          <br>
+        </div>
+    </div>
+  </div>
 </div>

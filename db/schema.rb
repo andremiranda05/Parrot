@@ -10,21 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160910180853) do
+ActiveRecord::Schema.define(version: 20160921190536) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "event_places", force: :cascade do |t|
-    t.string   "name"
-    t.string   "city"
-    t.string   "estado"
-    t.string   "logradouro"
-    t.decimal  "numero"
-    t.string   "bairro"
-    t.string   "referencia"
+  create_table "attractions", force: :cascade do |t|
+    t.string   "nome"
+    t.string   "contato"
+    t.integer  "event_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_attractions_on_event_id", using: :btree
   end
 
   create_table "events", force: :cascade do |t|
@@ -38,9 +35,26 @@ ActiveRecord::Schema.define(version: 20160910180853) do
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.integer  "user_id"
-    t.integer  "event_place_id"
-    t.index ["event_place_id"], name: "index_events_on_event_place_id", using: :btree
+    t.string   "nome_espaco"
+    t.string   "cidade"
+    t.string   "estado"
+    t.string   "logradouro"
+    t.integer  "numero"
+    t.float    "valor"
+    t.string   "bairro"
+    t.string   "referencia"
+    t.time     "horario"
+    t.boolean  "visivel"
     t.index ["user_id"], name: "index_events_on_user_id", using: :btree
+  end
+
+  create_table "organizators", force: :cascade do |t|
+    t.string   "nome"
+    t.string   "contato"
+    t.integer  "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_organizators_on_event_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -57,10 +71,12 @@ ActiveRecord::Schema.define(version: 20160910180853) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "nome"
+    t.boolean  "admin"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  add_foreign_key "events", "event_places"
+  add_foreign_key "attractions", "events"
   add_foreign_key "events", "users"
+  add_foreign_key "organizators", "events"
 end

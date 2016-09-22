@@ -1,5 +1,14 @@
 source 'https://rubygems.org'
 
+#Nested Attributes
+gem 'cocoon'
+# Painel de administrador
+gem 'remotipart', github: 'mshibuya/remotipart'
+gem 'rails_admin', '>= 1.0.0.rc'
+# Formulários de Email
+gem 'mail_form'
+#BootstrapForm
+gem 'bootstrap_form'
 # sistema usuario devise
 gem 'devise'
 # paperclip

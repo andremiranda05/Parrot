@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
 
-  resources :event_places
-  devise_for :users
+
+  
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  devise_for :users, controllers:{
+    registrations: 'users/registrations'
+  }
+  resources :contato, only: [:new , :create]
+
   resources :events
   root 'home#index'
   get 'index' => 'home#index'
