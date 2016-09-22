@@ -1,69 +1,145 @@
-    <%= form_for(event) do |f| %>
-      <% if event.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+<style>
 
-          <ul>
-          <% event.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-          </ul>
-        </div>
+  div#formulario{
+    margin: 0 auto;
+    width: 400px;
+  }
+  #marg{
+    float: none;
+    clear: both;
+    margin: 0 auto;
+  }
+  #aviso{
+    color: #cc0000;
+  }
+  #position{
+   justify-content: center;
+  }
+
+</style>
+
+<body>
+
+  <%= form_for(event) do |f| %>
+  <% if event.errors.any? %>
+  <div id="error_explanation" class="container-fluid">
+    <h2><%= pluralize(event.errors.count, "erro") %> O evento não pode ser salvo:</h2>
+
+    <ul>
+      <% event.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
       <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+    <div class="row">
+      <div id="position" class="container-fluid">
+        <div id="marg" class="col-md-6">
 
 
-      <div class="field">
-        <%= f.label :nome_evento %>
-        <%= f.text_field :nome_evento %>
+          <!--Informações Evento-->
+          <h2>Informações Evento</h2>
+            <hr>
+            <div class="field">
+              <%= f.label :nome_evento %>
+              <%= f.text_field :nome_evento, class:"form-control" %>
+            </div>
+
+            <div class="field">
+              <%= f.label :Foto %>
+              <%= f.file_field :photo , type:"file" %>
+            </div>
+
+            <div class="field">
+              <%= f.label :data_evento %>
+              <%= f.date_field :data_evento ,  class:"form-control" %>
+            </div>
+
+            <div class="field">
+              <%= f.label :horario %>
+              <%= f.time_field :horario , class:"form-control"  %>
+            </div>
+
+            <div class="field">
+              <%= f.label :descrição %>
+              <%= f.text_area :descrição , size:"10px", class:"form-control"%>
+            </div>
+
+            <div class="field">
+              <%= f.label :valor %>
+              <%= f.number_field :valor,  class:"form-control" , placeholder:"R$ 00,00"  %>
+            </div>
+
+          <div class="field">
+            <h3>Atrações</h3> <br>
+            <div class="form-group">
+              <%= link_to_add_association 'Adicionar atracao', f, :attractions, class:"btn btn-default" %>
+
+              <%= f.fields_for :attractions do |atracao| %>
+            	  <%= render 'attraction_fields', f: atracao %>
+
+              <%end%>
+            </div>
+          </div>
+
+
+          <!-- Endereço -->
+            <div class="container-fluid">
+
+              <h2> Local do evento </h2>
+                <div class="form-group">
+                  <%= f.label :nome_espaco %>
+                  <%= f.text_field :nome_espaco,  class:"form-control" %>
+                </div>
+                <div class="field">
+                  <%= f.label :cidade %>
+                  <%= f.text_field :cidade,  class:"form-control"  %>
+                </div>
+                <div class="field">
+                  <%= f.label :estado %>
+                  <%= f.text_field :estado ,  class:"form-control" %>
+                </div>
+                <div class="field">
+                  <%= f.label :logradouro %>
+                  <%= f.text_field :logradouro ,  class:"form-control" %>
+                </div>
+                <div class="field">
+                  <%= f.label :numero %>
+                  <%= f.text_field :numero ,  class:"form-control" %>
+                </div>
+                <div class="field">
+                  <%= f.label :bairro %>
+                  <%= f.text_field :bairro ,  class:"form-control" %>
+                </div>
+                <div class="field">
+                  <%= f.label :referencia %>
+                  <%= f.text_field :referencia ,  class:"form-control" %>
+                </div>
+            </div>
+
+                  <h3>Organização</h3>
+                  <%= f.fields_for :organizator do |organizator| %>
+                    <div class="field">
+                      <%= organizator.label :nome %>
+              			  <%= organizator.text_field :nome ,class:"form-control" %>
+                    </div>
+                    <div class="field">
+              			  <%= organizator.text_field :contato , class:"form-control" %>
+                      <%= organizator.label :contato %>
+                    </div>
+                  <%end%>
+
+            <br>
+
+        <div id="conteudo">
+          <%= f.submit "Salvar" ,class: "btn btn-sucess"%>
+          <p id = "aviso"> *Os Eventos cadastrados passarão por um processo de validação antes de serem mostrados no site.</p>
+        </div>
+        <br>
+        <% end %>
       </div>
+    </div>
+  </div>
 
-      <div class="field">
-        <%= f.label :data_evento %>
-        <%= f.date_select :data_evento %>
-      </div>
-
-      <div class="field">
-        <%= f.label :descrição %>
-        <%= f.text_area :descrição %>
-      </div>
-
-      <div class="field">
-        <%= f.label :photo %>
-        <%= f.file_field :photo %>
-      </div>
-
-      <%= f.fields_for :event_place do |ff|%>
-        <div class="field">
-          <%= ff.label :name %>
-          <%= ff.file_field :name %>
-        </div>
-        <div class="field">
-          <%= ff.label :city %>
-          <%= ff.file_field :city %>
-        </div>
-        <div class="field">
-          <%= ff.label :estado %>
-          <%= ff.file_field :estado %>
-        </div>
-        <div class="field">
-          <%= ff.label :logradouro %>
-          <%= ff.file_field :logradouro %>
-        </div>
-        <div class="field">
-          <%= ff.label :numero %>
-          <%= ff.file_field :numero %>
-        </div>
-        <div class="field">
-          <%= ff.label :bairro%>
-          <%= ff.file_field :bairro %>
-        </div>
-        <div class="field">
-          <%= ff.label :referencia %>
-          <%= ff.file_field :referencia %>
-        </div>
-      <% end %>
-
-      <div class="actions">
-        <%= f.submit %>
-      </div>
-    <% end %>
+</body>

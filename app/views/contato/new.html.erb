@@ -1,0 +1,66 @@
+<style >
+
+
+.container{
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+#pad{
+  padding: 30px;
+}
+</style>
+
+	 <div class="container">
+	 	<div class="row">
+      <div class="col-lg-6">
+	 			<h3>Entre em contato com a gente!</h3>
+	 			<div class="hline"></div>
+		 			<p> Preencha o formulario a seguir e nos dê seu feedback</p>
+          <%= form_for @contato, url: contato_index_path do |f| %>
+              <%= f.label :nome %><br>
+              <%= f.text_field :name, required: true, class:"form-control", placeholder: "Digite seu Nome" %>
+              <br>
+
+              <%= f.label :email %><br>
+              <%= f.text_field :email, required: true, class:"form-control", placeholder: "Digite seu Email"%>
+              <br>
+
+              <%= f.label :mensagem %><br>
+              <%= f.text_area :message, as: :text, class:"form-control",rows:"3", placeholder: "Escreva aqui sua mensagem!" %>
+
+              <div class="hidden">
+                <%= f.label :nickname %><br>
+                <%= f.text_field :nickname, hint: 'leave this field blank' %>
+              </div>
+
+              <br>
+              <br>
+
+              <%= f.submit 'Enviar', class: "button" %>
+
+             <% end %>
+
+			</div>
+
+      <div id="pad" class="container-fluid">
+  	 		<div class="col-lg-6">
+  		 		<h4>Contato parrot</h4>
+  		 		<div class="hline"></div>
+  		 			<p>
+  		 				E-mail: parrot.contato@gmail.com <br/>
+  		 				IFPI, Floriano<br/>
+  		 				Brasil.<br/>
+  		 			</p>
+  		 			<p>  Parrot </p>
+        </div>
+      </div>
+	 	</div>
+  </div>
+
+
+
+
+
+
+
+</body>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="pt_BR">
   <head>
     <meta charset="utf-8">
@@ -11,7 +11,7 @@
 
     <!-- For third-generation iPad with high-resolution Retina display: -->
     <!-- Size should be 144 x 144 pixels -->
-    <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
+    <%= favicon_link_tag 'logo.ico', :type => 'image/png', :sizes => '144x144' %>
 
     <!-- For iPhone with high-resolution Retina display: -->
     <!-- Size should be 114 x 114 pixels -->
@@ -27,7 +27,7 @@
 
     <!-- For all other devices -->
     <!-- Size should be 32 x 32 pixels -->
-    <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+    <%= favicon_link_tag 'logo.ico', :rel => 'shortcut icon' %>
 
     <%= javascript_include_tag "application" %>
 
@@ -50,9 +50,13 @@
         }
 
         /* Add a gray background color and some padding to the footer */
-        footer {
+        footer{
+          width: 100%;
           background-color: #1b1b1b;
-          padding: 25px;
+          padding: 20px;
+          position: relative;
+	        bottom: 0;
+
         }
 
       #logo{
@@ -79,11 +83,11 @@
         -webkit-justify-content: center;
         justify-content: center;
       }
-      #conteudo-footer p{
-        color: #fcfcfc
+      #conteudo-footer  p{
+        color: #fcfcfc;
       }
       h4{
-          color: #fff9f9;
+        color: #fcfcfc;
       }
       div#corpo-centro{
         text-align: center;
@@ -107,18 +111,22 @@
           <ul class="nav navbar-nav">
             <li class="active"> <%= link_to "Inicio", index_path%> </li>
             <li><%= link_to "Sobre", sobre_path%></li>
-            <li><%= link_to "Contato", contato_path %></li>
+            <li><%= link_to "Contato", new_contato_path %></li>
             <li><%= link_to "Eventos", events_path %></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <% if current_user.present? %>
-            <li><a> Seja bem vindo <%= current_user.email %></a></li>
-            <li><%= link_to edit_user_registration_path(@user) do %> <i class="fa fa-wrench" aria-hidden="true"></i> Minha Conta <% end %> </li>
-            <li><%= link_to new_event_path(@event) do %> <i class="fa fa-plus-square-o" aria-hidden="true"></i> Novo evento <% end %> </li>
-            <li><%= link_to(destroy_user_session_path(@event), :method => :delete) do%><i class="fa fa-sign-out" aria-hidden="true"></i> Sair <% end %></li>
+              <li><a class="fa fa-user" aria-hidden="true" >&nbsp;  Olá,&nbsp; <%= current_user.nome %></a></li>
+              <%if current_user.admin == true%>
+                	<li> <%= link_to'Administração', rails_admin_path %></li>
+              <%else%>
+                  <li><%= link_to edit_user_registration_path(@user) do %> <i class="fa fa-wrench" aria-hidden="true"></i> Minha Conta <% end %> </li>
+              <%end%>
+              <li><%= link_to new_event_path(@event) do %> <i class="fa fa-plus-square-o" aria-hidden="true"></i> Novo evento <% end %> </li>
+              <li><%= link_to(destroy_user_session_path(@event), :method => :delete) do%><i class="fa fa-sign-out" aria-hidden="true"></i> Sair <% end %></li>
             <%else%>
-            <li> <%= link_to new_user_session_path(@user) do %> <i class="fa fa-sign-in"></i> Login <% end %> </li>
-            <li><%= link_to new_user_registration_path(@user) do %> <i class="fa fa-sign-in"></i> Cadastre-se <% end %> </li>
+              <li> <%= link_to new_user_session_path(@user) do %> <i class="fa fa-sign-in"></i> Login <% end %> </li>
+              <li><%= link_to new_user_registration_path(@user) do %> <i class="fa fa-sign-in"></i> Cadastre-se <% end %> </li>
             <%end%>
           </ul>
 
@@ -128,10 +136,7 @@
           <form class="navbar-form navbar-left">
             <div class="form-group">
               <div class="form-group">
-                <%= form_tag(events_path, :method => :get) do%>
-                <%= text_field_tag'search', placeholder="Buscar eventos..."%>
-                <%= submit_tag"Buscar"%>
-                <%end%>
+
               </div>
             </div>
             <!--<button type="submit" class="btn btn-default">Buscar</button>-->
@@ -142,34 +147,31 @@
     </nav>
       <div id="corpo-centro">
         <div class="">
-          <%= bootstrap_flash %>
+
           <%= yield %>
         </div>
       </div>
 
-    <footer class="container-fluid">
+    <footer >
          <div id="conteudo-footer">
       	 	<div class="container">
       		 	<div class="row">
       		 		<div class="col-md-4">
-      		 			<h4>Sobre</h4>
-      		 			<div class="hline-w"></div>
+      		 			<h4 id="sobretitle">Sobre</h4>
       		 			<p>O parrot é uma aplicação desenvolvida por alunos do curso de Análise e Desenvolvimento de sistemas do Instituto Federal do Piauí Campus Floriano </p>
       		 		</div>
               <div class="col-md-4">
                 <p>
                   <h4>Redes Sociais</h4>
-                  <a href="#"><i class="fa fa-facebook"></i></a>
-                  <a href="#"><i class="fa fa-twitter"></i></a>
-                  <a href="#"><i class="fa fa-instagram"></i></a>
-                  <a href="#"><i class="fa fa-tumblr"></i></a>
+                  <a href="https://www.facebook.com"><i class="fa fa-facebook"></i></a>
+                  <a href="https://www.twitter.com"><i class="fa fa-twitter"></i></a>
+                  <a href="https://www.instagram.com"><i class="fa fa-instagram"></i></a>
+                  <a href="https://www.tumblr.com"><i class="fa fa-tumblr"></i></a>
                 </p>
               </div>
               <div class="col-md-4">
-                <p>
                   <h4> Parrot <i class="fa fa-copyright" aria-hidden="true"></i> &nbsp 2016</h4>
-                    Desenvolvido por alunos de TADS <br> 2016
-                </p>
+                <p> Desenvolvido por alunos de Tenologia em Análise e Desenvolvimento de Sistemas </p>
               </div>
       		 	</div><! --/row -->
       	 	</div><! --/container -->

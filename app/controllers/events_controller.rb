@@ -4,8 +4,11 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-
-    @events = Event.all
+    if params[:search]
+      @events = Event.search(params[:search])
+    else
+      @events = Event.all.order("data_evento ASC")
+    end
   end
 
   # GET /events/1
@@ -17,17 +20,18 @@ class EventsController < ApplicationController
   # GET /events/new
   def new
     if current_user.present?
-    #  @event = Event.new
+
     @event = current_user.events.build
+    @event.build_organizator
     else
     redirect_to events_path
     end
 
-#    @event.build_event_place
   end
 
   # GET /events/1/edit
   def edit
+      @event.build_organizator
   end
 
   # POST /events
@@ -38,7 +42,7 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
-        format.html { redirect_to @event, notice: 'Event was successfully created.' }
+        format.html { redirect_to @event, notice: 'Evento criado com sucesso.' }
         format.json { render :show, status: :created, location: @event }
       else
         format.html { render :new }
@@ -57,7 +61,7 @@ end
   def update
     respond_to do |format|
       if @event.update(event_params)
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+        format.html { redirect_to @event, notice: 'Evento editado com sucesso.' }
         format.json { render :show, status: :ok, location: @event }
       else
         format.html { render :edit }
@@ -71,7 +75,7 @@ end
   def destroy
     @event.destroy
     respond_to do |format|
-      format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
+      format.html { redirect_to events_url, notice: 'O evento foi deletado com sucesso' }
       format.json { head :no_content }
     end
   end
@@ -84,7 +88,8 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:nome_evento, :data_evento, :descrição, :photo, :user_id, :event_place_id, :event_place_attributes => [ :name, :city, :estado, :logradouro, :numero, :bairro, :referencia])
+      params.require(:event).permit(:nome_evento, :data_evento, :descrição, :photo, :user_id, :nome_espaco, :horario,  :cidade, :estado , :logradouro, :numero, :valor, :bairro, :referencia,
+      attractions_attributes: [ :id ,:nome, :contato,:_destroy], organizator_attributes: [:id ,:nome, :contato, :_destroy])
 
     end
 end
